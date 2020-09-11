@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.StudentMapper" >
+
+    <resultMap id="resultMap" type="entity.Student">
+        <!--前面数据库字段,后面是实体类属性名字段-->
+        <id column="id" property="id"></id>
+        <result column="name" property="name"></result>
+        <result column="age" property="age"></result>
+        <result column="gender" property="gender"></result>
+    </resultMap>
+
+    <sql id="allColumn">
+        id,name,age,gender
+    </sql>
+
+    <!--id是dao层的方法名,parameterType:表示接口中传递参数的类型,查询有返回值指定,添加和更新没有,后面开启主键,
+    并且指定主键,根据实体类中属性id来的-->
+    <insert id="insert" parameterType="entity.Student" useGeneratedKeys="true" keyProperty="id">
+        insert into student(id,name,age,gender) value (#{id},#{name},#{age},#{gender})
+    </insert>
+
+    <insert id="insertList" parameterType="list" useGeneratedKeys="true" keyProperty="id">
+        insert into student(id,name,age,gender) values
+        <foreach collection="list" item="stu" separator=",">
+            (#{stu.id},#{stu.name},#{stu.age},#{stu.gender})
+        </foreach>
+    </insert>
+
+    <!--有一个参数取什么都能取到-->
+    <select id="selectByPrimarykey" resultMap="resultMap">
+        select <include refid="allColumn"></include> from student where id=#{id}
+    </select>
+
+    <select id="selectByName" resultMap="resultMap">
+        select <include refid="allColumn"></include> from student where name=#{name}
+    </select>
+
+    <!--sql语句后面不要写分号-->
+    <select id="selectByNameAndAge" resultMap="resultMap">
+        select <include refid="allColumn"/> from student where name=#{name} and age=#{age}
+    </select>
+
+
+
+
+</mapper>
