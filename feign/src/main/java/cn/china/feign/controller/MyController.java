@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class MyController {
 
+    /*这是feign*/
     @Autowired
     MyInterface mi;
 
