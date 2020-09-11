@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class MyController {
 
-    /*这是feign的业务代码*/
+    /*这是feign*/
     @Autowired
     MyInterface mi;
 
